@@ -71,11 +71,26 @@ app.post("/auth/register", async (req, res) => {
     return res.status(422).json({ msg: "Passwords don't match!" });
   }
 
+  if (!/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(email)) {
+    return res.status(422).json({ msg: "Invalid Email!" });
+  }
+
   // Check if user exists
   const userExist = await User.findOne({ email: email });
 
   if (userExist) {
     return res.status(422).json({ msg: "Email already in use. Please user another email!" });
+  }
+
+  // Verify password
+  if (password.length < 8) {
+    return res.status(422).json({ msg: "Password is to short!" });
+  } else if (!/[A-Z]/.test(password)) {
+    return res.status(422).json({ msg: "Password must have a upper case character!" });
+  } else if (!/[0-9]/.test(password)) {
+    return res.status(422).json({ msg: "Password must have a number!" });
+  } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    return res.status(422).json({ msg: "Password must have a special character!" });
   }
 
   // Create password
