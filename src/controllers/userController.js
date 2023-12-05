@@ -45,10 +45,10 @@ exports.login = async (req, res) => {
       { expiresIn: "5m" }
     );
 
-    res.status(200).json({ msg: "Authentication completed successfully!", token });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: "Error on the Server! Try agian later!" });
+    return res.status(200).json({ msg: "Authentication completed successfully!", token });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ msg: "Error on the Server! Try agian later!" });
   }
 };
 
@@ -109,9 +109,39 @@ exports.register = async (req, res) => {
   try {
     await user.save();
 
-    res.status(201).json({ msg: "User created with success!" });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: "Error on the Server! Try agian later!" });
+    return res.status(201).json({ msg: "User created with success!" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ msg: "Error on the Server! Try agian later!" });
+  }
+};
+
+exports.getUser = async (req, res) => {
+  try {
+    // req.params
+    let id = req.params.id;
+
+    // Check if user exists
+    const user = await User.findById(id, "-password");
+
+    if (!user) {
+      return res.status(404).send({ success: 0, message: "User not found!" });
+    }
+
+    // Build response
+    let response = {
+      success: 1,
+      length: user.length,
+      results: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      },
+    };
+
+    // Send response
+    return res.status(200).send(response);
+  } catch (err) {
+    return res.status(500).send({ error: err, message: err.message });
   }
 };
