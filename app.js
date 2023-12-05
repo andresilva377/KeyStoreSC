@@ -24,3 +24,4 @@ const routes = requireDir("./src/routes");
 for (let i in routes) app.use("/", routes[i]);
 
 module.exports = app;
+// teste
