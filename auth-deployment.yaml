@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-app
+  labels:
+    app: auth-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: auth-app
+  template:
+    metadata:
+      labels:
+        app: auth-app
+    spec:
+      containers:
+        - name: auth-app
+          image: node_auth_jwt-auth-service:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: DB_USER
+              value: "keystore"
+            - name: DB_PASS
+              value: "Ad4hjZOohoM74iIG"
+            - name: SECRET
+              value: "JSJDAAMFKJAUFMCKOPOAKCIKJOA@%&$JNASJNDsdaasfasfc$%$@"
