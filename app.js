@@ -15,7 +15,6 @@ mongoose
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.elzyrqf.mongodb.net/?retryWrites=true&w=majority`
   )
   .then(() => {
-    app.listen(3000);
     console.log("Connected to Database!");
   })
   .catch((err) => console.log(err));

@@ -1,4 +1,4 @@
-FROM node:20
+FROM node:lts
 WORKDIR /NODE_AUTH_JWT
 COPY package*.json ./
 RUN npm install
