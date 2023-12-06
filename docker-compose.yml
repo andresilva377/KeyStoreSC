@@ -4,3 +4,7 @@ services:
     build: .
     ports:
       - "3000:3000"
+    environment:
+      DB_USER: keystore 
+      DB_PASS: Ad4hjZOohoM74iIG 
+      SECRET: JSJDAAMFKJAUFMCKOPOAKCIKJOA@%&$JNASJNDsdaasfasfc$%$@
